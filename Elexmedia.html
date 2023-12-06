@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input {
+            margin-bottom: 10px;
+            width: 100%;
+            padding: 5px;
+        }
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Loan Details</h2>
+    <form id="loanForm">
+        <label for="employeeId">Employee ID:</label>
+        <input type="text" id="employeeId" required>
+
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
+
+        <label for="address">Address:</label>
+        <input type="text" id="address" required>
+
+        <label for="designation">Designation:</label>
+        <input type="text" id="designation" required>
+
+        <label for="loanAmount">Loan Amount:</label>
+        <input type="number" id="loanAmount" required>
+
+        <label for="loanDate">Date of Loan Taken:</label>
+        <input type="date" id="loanDate" required>
+
+        <label for="interestRate">Interest Rate:</label>
+        <input type="number" id="interestRate" required>
+
+        <label for="maturityDate">Maturity Date:</label>
+        <input type="date" id="maturityDate" required>
+
+        <button type="button" onclick="calculateLoan()">Calculate Loan</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        function calculateLoan() {
+            // Get input values
+            var employeeId = document.getElementById("employeeId").value;
+            var designation = document.getElementById("designation").value;
+            var loanAmount = parseFloat(document.getElementById("loanAmount").value);
+            var interestRate = parseFloat(document.getElementById("interestRate").value);
+
+            // Validation
+            if (employeeId.length < 4 || !employeeId.startsWith("E")) {
+                alert("Invalid Employee ID. It must be at least 4 characters and start with 'E'.");
+                return;
+            }
+
+            // Calculation based on designation
+            var totalInterest = 0;
+            switch (designation.toLowerCase()) {
+                case "manager":
+                    totalInterest = loanAmount * 0.1;
+                    break;
+                case "developer":
+                    totalInterest = loanAmount * 0.08;
+                    break;
+                default:
+                    totalInterest = loanAmount * 0.05;
+            }
+
+            var totalLoanAmount = loanAmount + totalInterest;
+
+            // Display results
+            var resultDiv = document.getElementById("result");
+            resultDiv.innerHTML = `
+                <h3>Loan Details</h3>
+                <p>Employee ID: ${employeeId}</p>
+                <p>Loan Amount: ${loanAmount} INR</p>
+                <p>Total Interest: ${totalInterest.toFixed(2)} INR</p>
+                <p>Total Loan Amount Payable: ${totalLoanAmount.toFixed(2)} INR</p>
+            `;
+        }
+    </script>
+
+</body>
+</html>
